@@ -1,37 +1,30 @@
-# History
-
 #Import of relevant packages
 import csv
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import pandas as pd
 
-#Loading of a .txt as csv_file
+# Load the *data*.csv for the WordCloud
+data = pd.read_csv(r"C:\Users\Paul\Desktop\Code\WordCloud_Generation\kicker_bl_li_tweets.csv")
 
-#with open('Test.txt') as csv_file:
-    #csv_reader = csv.reader(csv_file)
-    #line_count = 0
-    #your_list = '\t'.join([i[0] for i in csv_reader])
+# Load a List of Stopwords for filtering
+Ignore = open(r"C:\Users\Paul\Desktop\Code\WordCloud_Generation\Stopwords.txt",'r').read().split()
 
-data = pd.read_csv("kicker_bl_li_tweets.csv")
-
-# Set Words to Ignore in WordCloud
-Ignore="Er Sie Es Und Wie Der Die Das Wieso Weshalb Warum"
-ListOfWordsIgnore = Ignore.split()
-
-#Set STOPWORDS
-STOPWORDS.update(ListOfWordsIgnore)
+#Set and update Stopwords
+STOPWORDS.update(Ignore)
 stopwords = set(STOPWORDS)
 
-# Generation of a wordcloud image
+# Generation of a WordCloud image with a set of customization
 wordcloud = WordCloud(
     background_color='white',
     stopwords=stopwords,
-    max_words=1000,
-    max_font_size=40,
-     random_state=42
+    max_words=5000,
+    width=1920,
+    height=1080,
+    max_font_size=1000
 
                       ).generate(str(data))
+#Plotter
 
 plt.imshow(wordcloud, interpolation="bilinear")
 plt.axis("off")
